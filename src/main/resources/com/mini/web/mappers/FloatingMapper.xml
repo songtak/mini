@@ -1,0 +1,59 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mini.web.mappers.FloatingMapper">
+
+    <insert id="insertFloating"
+            parameterType="com.mini.web.floating.FloatingDTO">
+        insert floating_seq,
+            road_name, road_description, km, Required, start_point, start_new_adress,
+            start_old_adress, end_point, end_new_adress, end_old_adress, course,
+            management_number, management, update_date, lati, longi, provider_code, provider
+            into floating
+        values (#{floatingSeq}, #{roadName}, #{roadDescription},#{km},#{required},#{startPoint},#{startNewAdress},#{startOldAdress}
+        ,#{endPoint},#{endNewAdress},#{endOldAdress},#{course},#{managementNumber},#{management},#{updateDate},#{lati}
+        ,#{longi},#{providerCode},#{provider})
+    </insert>
+
+    <update id="updateFloating"
+            parameterType="com.mini.web.floating.FloatingDTO">
+        update set road_name = #{roadName} from floating
+        where floating_seq like #{floatingSeq}
+    </update>
+
+    <delete id="deleteFloating"
+            parameterType="com.mini.web.floating.FloatingDTO">
+        delete from floating where floating_seq like #{floatingSeq}
+    </delete>
+
+    <select id="selectFloatings" resultType="com.mini.web.floating.FloatingDTO"
+            parameterType="com.mini.web.proxy.Pager">
+        select floating_seq floatingSeq, road_name roadName, start_point startPoint,
+                end_point endPoint, km, required, update_date updateDate, provider
+        from floating
+        <if test="searchWord != null">
+            where road_name like '%${searchWord}%'
+        </if>
+        limit #{rowStart}, #{pageSize}
+
+    </select>
+
+
+    <select id="selectFloating" resultType="com.mini.web.floating.FloatingDTO"
+            parameterType="string">
+      select floating_seq floatingSeq, road_name roadName, road_description roadDescription,
+                start_point startPoint, start_new_adress startNewAdress, start_old_adress startOldAdress,
+                end_point endPoint, end_new_adress endNewAdress, end_old_adress endOldAdress,
+                course, management_number managementNumber, management,
+                km, required, update_date updateDate, provider
+      from floating
+      where floating_seq = #{value}
+
+    </select>
+
+
+    <select id="count" resultType="int">
+      select count(*)
+      from floating
+    </select>
+</mapper>
