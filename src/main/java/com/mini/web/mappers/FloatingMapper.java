@@ -12,6 +12,6 @@ import java.util.List;
 public interface FloatingMapper {
 
     public int count();
-    public List<FloatingDTO> selectFloatings(Pager p);
+    public List<FloatingDTO> selectFloatings(Pager pager);
     public FloatingDTO selectFloating(String floatingSeq);
 }

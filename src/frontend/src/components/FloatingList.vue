@@ -53,7 +53,7 @@
         created() {
             console.log('페이징 가기 전 : ')
             let json = proxy.methods.paging(`${this.$store.state.search.context}/floatings/null/0`)
-            this.$store.state.search.list = json.list
+            this.$store.state.search.list = json.floatings
             this.$store.state.search.pages = json.pages
             this.$store.state.search.pager = json.temp
             console.log('페이징 다녀온 다음 : '+json.temp.pageSize)

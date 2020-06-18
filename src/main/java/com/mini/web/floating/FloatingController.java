@@ -3,6 +3,7 @@ package com.mini.web.floating;
 
 import com.mini.web.mappers.FloatingMapper;
 import com.mini.web.proxy.Box;
+import com.mini.web.proxy.IFunction;
 import com.mini.web.proxy.Pager;
 import com.mini.web.proxy.Proxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,9 @@ public class FloatingController {
         pxy.print("넘어온 페이지번호: "+pageNumber);
         pager.setPageNow(pxy.integer(pageNumber));
         pager.setBlockSize(5);
-        pager.setPageSize(5);
+        pager.setPageSize(20);
         pager.paging();
-        Function<Pager, List<FloatingDTO>> f = p ->  floatingMapper.selectFloatings(p);
+        IFunction<Pager, List<FloatingDTO>> f = p ->  floatingMapper.selectFloatings(p);
         List<FloatingDTO> list = f.apply(pager);
         pxy.print("***********");
         for(FloatingDTO m : list){
