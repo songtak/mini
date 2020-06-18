@@ -1,154 +1,54 @@
-<template>
-<div id="back">
-<div id="header" >
-            <img
-               id="mainimg"
-               src="https://i.pinimg.com/originals/7f/22/96/7f22963d97da87d2714d3029c79a0341.gif"
-               title="mainimg"
-            />
-</div>
-
-<div id="topnav">
-  <router-link to="/floatingList"><span id="a"> FIND FLOAT</span></router-link>
-  <router-link to="/floatingMap"><span id="b"> LET'S GO FLOATING </span></router-link>
-  <router-link to="/login"><span id="login">SIGN IN</span></router-link>
-  <router-link to="/join"><span id="join">SIGN UP</span></router-link>
-</div>
-
-<div id="row">
-  <div id="leftcolumn">
-    <div id="card">
-      <h1>MONTHLY HOT FLOATING</h1>
-      <h3>GOYANG, 2020. 6. 1 </h3>
-      <div> <img id="fakeimg" src="https://lh3.googleusercontent.com/proxy/dXyOFK2UHt6LFk2YdxZd8UT3nKKd53-ejP3C_J1DMUAdBqT6xE1zTi7BWrKr02x3aanjeenq0wvzx6ZnFAGn47ObjtDV2kKsCYbIObu4pAnPMISaAXlrwOSvmXH8LCgFO5Vu7pBl5VV_XXYuaA"></div>
-      <p style="font-size:20px"> 송강 누리길</p>
-      <p>풍광이 아름다운 하천변 메타세콰이어 길.</p>
-    </div>
-  </div>
-  <div id="rightcolumn">
-    <div id="card">
-      <h2>About Us</h2>
-      <div id="fakeimg">Image</div>
-      <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-    </div>
-    <div id="card">
-      <h3>Popular Post</h3>
-    </div>
-    <div id="card">
-      <h3>Follow Me</h3>
-      <p>Some text..</p>
-    </div>
-  </div>
-</div>
-
-<div id="footer">
-  <h2>사업</h2>
-</div>
-</div>
-</template>
-
-<script>
-    export default {
-        methods: {
-        }
-};
+<div class="mapWrap">
+  <div id="map" style="width:100%;height:400px;">
+  </div> </div> <div id="coordXY"></div>
+<!-- ★ 키입력 뒷편 &libraries=services 필수입력 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=발급API키입력&libraries=services">
 
 </script>
-<style scoped>
-  box-sizing: border-box;
+<script>
+  //////////////////// // 카카오 지도 API S ///////////////////
+    var coordXY = document.getElementById("coordXY");
+    //검색 지도 경도위도 알아내기
+    var container = document.getElementById('map');
+    //지도를 담을 영역의 DOM 레퍼런스
+    var options = { center: new kakao.maps.LatLng(33.450701, 126.570667),
+    // 위도경도 level: 3 //지도의 레벨(확대, 축소 정도) };
+    var map = new kakao.maps.Map(container, options);
+   //지도 생성 및 객체 리턴
+   // 지도타입 컨트롤, 줌 컨트롤 생성
+     var mapTypeControl = new kakao.maps.MapTypeControl();
+     map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+     var zoomControl = new kakao.maps.ZoomControl();map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+  // ★ 주소-좌표 변환 객체를 생성
+    var geocoder = new kakao.maps.services.Geocoder();
+  // ★ 주소로 좌표를 검색
+        geocoder.addressSearch('신 주소 입력', function(result, status) {
+    // 정상적으로 검색이 완료됐으면
+         if (status === kakao.maps.services.Status.OK) {
+      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    } yy = result[0].x; xx = result[0].y;
+    // 결과값으로 받은 위치를 마커로 표시
+    var marker = new kakao.maps.Marker({ map: map, position: coords });
+    // 인포윈도우로 장소에 대한 설명을 표시
+    var iwContent = '<div style="padding:5px;">이피엔스<br>'
+            + '<a href="https://map.kakao.com/link/map/이피엔스,37.51128, 127.04232" style="color:blue" target="_blank">큰지도보기</a>'
+            + '<a href="https://map.kakao.com/link/to/이피엔스,37.51128, 127.04232" style="color:blue" target="_blank">길찾기</a>'
+            +'</div>'
 
-body {
-  font-family: Arial;
-  padding: 10px;
-  background: #000000;
-}
- #back{
-    background-color: black;}
+            var infowindow = new kakao.maps.InfoWindow({
+              content : iwContent }); infowindow.open(map, marker);
+              // 지도의 중심을 결과값으로 받은 위치로 이동
+          map.setCenter(coords);
+          // ★ resize 마커 중심
+        var markerPosition = marker.getPosition();
+        $(window).on('resize', function(){
+          map.relayout(); map.setCenter(markerPosition);
+        });
+        // ★ 검색 경도위도 표시
+        coordXY.innerHTML = "<br>X좌표 : " + xx + "<br><br>Y좌표 : " + yy;
+        }else{ console.log('에러');
+        }
+    });
+        //////////////////// // 카카오 지도 API E ///////////////////
+    </script>
 
- #header {
-  padding: 20px;
-  text-align: center;
-  background: black;
-}
-
-#mainimg{
-        height: 280px;
-  }
-
-#topnav {
-  font-size: 24px;
-  color: black;
-  overflow: hidden;
-  background-color: #00ff00;
-}
-
-#topnav span {
-  display: block;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-
-#topnav span:hover {
-  background-color: #009900;
-  color: white;
-}
-#a{float:left}
-#b{float:left}
-
-#join{
-    float:right
-    }
-
-#login{
-    float:right}
-
-#leftcolumn {
-position: centered;
-  width: 75%;
-}
-#rightcolumn {
-position: centered;
-  width: 75%;
-}
-
-
-#row{
-    background-color: black;
-    }
-
-#fakeimg {
-  width: 100%;
-  padding: 20px;
-  height:337px;
-}
-
-#card {
-  position: centered;
-  color: white;
-  background-color: black;
-  padding: 20px;
-  margin-top: 20px;
-}
-
-#row:after {
-position: centered;
-  content: "";
-  display: table;
-  clear: both;
-}
-
-
-#footer {
-  padding: 20px;
-  text-align: center;
-  background: #00ff00;
-  margin-top: 20px;
-}
-
-
-
-
-</style>

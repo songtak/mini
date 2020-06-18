@@ -39,10 +39,6 @@ public class FloatingController {
         pager.paging();
         IFunction<Pager, List<FloatingDTO>> f = p ->  floatingMapper.selectFloatings(p);
         List<FloatingDTO> list = f.apply(pager);
-        pxy.print("***********");
-        for(FloatingDTO m : list){
-            pxy.print(m.toString());
-        }
         box.clear();
         box.put("pager", pager);
         box.put("list", list);

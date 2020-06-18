@@ -35,9 +35,6 @@ const mutations ={
     DETAIL(state, data){
         state.item = data
     },
-    SEARCHWORD(state, data){
-        state.searchWord = data
-    },
     TRANSFER(state, data){
         state.pager = data.pager
         state.list = data.list

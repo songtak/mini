@@ -32,9 +32,15 @@
                 end_point endPoint, km, required, update_date updateDate, provider
         from floating
         <if test="searchWord != null">
-            where road_name like '%${searchWord}%'
+            where
+            (road_name  like '%${searchWord}%'
+            OR start_point  like '%${searchWord}%'
+             OR end_point  like '%${searchWord}%'
+             OR km  like '%${searchWord}%'
+            OR required  like '%${searchWord}%'
+            OR provider  like '%${searchWord}%')
         </if>
-        limit #{rowStart}, #{pageSize}
+        limit #{rowStart},  #{pageSize}
 
     </select>
 

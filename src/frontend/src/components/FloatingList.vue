@@ -21,12 +21,12 @@
                 <tr v-for="item of list" :key="item.seq">
                     <td>{{ item.floatingSeq }}</td>
                     <td><a @click="retrieveOne(item.floatingSeq)" href="#">{{ item.roadName }}</a></td>
-                    <td><a @click="retrieveOne(item.floatingSeq)" href="#">{{ item.startPoint }}</a></td>
-                    <td><a @click="retrieveOne(item.floatingSeq)" href="#">{{ item.endPoint }}</a></td>
-                    <td><a @click="retrieveOne(item.floatingSeq)" href="#">{{ item.km }}</a></td>
-                    <td><a @click="retrieveOne(item.floatingSeq)" href="#">{{ item.required }}</a></td>
-                    <td><a @click="retrieveOne(item.floatingSeq)" href="#">{{ item.updateDate }}</a></td>
-                    <td><a @click="retrieveOne(item.floatingSeq)" href="#">{{ item.provider }}</a></td>
+                    <td>{{ item.startPoint }}</td>
+                    <td>{{ item.endPoint }}</td>
+                    <td>{{ item.km }}</td>
+                    <td>{{ item.required }}</td>
+                    <td>{{ item.updateDate }}</td>
+                    <td>{{ item.provider }}</td>
                     <!--<td><a @click="retrieveOne(item.movieSeq)" href="#">{{ item.title }}</a></td>-->
                 </tr>
                 </tbody>

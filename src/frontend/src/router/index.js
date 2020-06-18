@@ -15,5 +15,6 @@ export default new VueRouter({
         {path: '/join', component: Join},
         {path: '/login', component: Login},
         {path: '/floatingList', component: FloatingList}
+
     ]
 });
