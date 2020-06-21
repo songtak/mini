@@ -10,33 +10,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class Pager {
     @Autowired FloatingMapper floatingMapper;
-    private int rowCount, pageCount, blockCount,
-            rowStart, pageStart, prevBlock,
-            rowEnd, pageEnd, nextBlock,
-            pageSize, blockSize,
-            pageNow, blockNow;
+    private int rowCount, startRow, endRow,
+            pageCount, pageSize, startPage, endPage, nowPage,
+            blockCount, blockSize, prevBlock, nextBlock, nowBlock;
     private boolean existPrev, existNext;
     private String searchWord;
-    public void paging(){
-        rowCount = floatingMapper.count();
-        //System.out.println(floatingMapper.count());
-        rowStart = pageNow * pageSize;
-        rowEnd = (pageNow != (pageCount -1)) ? rowStart + (pageSize-1): rowCount - 1;
-        pageCount = (rowCount % pageSize != 0) ? rowCount / pageSize +1 :rowCount / pageSize ;
-        pageStart = blockNow *  blockSize;
-        pageEnd = (blockNow != (blockCount -1)) ? pageStart + (blockSize - 1): pageCount - 1;
-        // pageSize = 5;
-        // pageNow = 0;
-        blockCount = (pageCount % blockSize != 0) ? pageCount / blockSize +1:pageCount / blockSize ;
-        prevBlock = pageStart - blockSize;
-        nextBlock = pageStart + blockSize;
-        // blockSize = 5;
-        blockNow = pageNow / blockSize;
-        //System.out.println("blockNow :: "+blockNow);
-        existPrev = blockNow != 0;
-        //System.out.println("existPrev :: "+existPrev);
-        existNext = (blockNow + 1) != blockCount;
-        //System.out.println("existNext :: "+existNext);
-    }
 
+    public void paging(){
+        nowBlock = nowPage/blockSize;
+        rowCount = floatingMapper.count();
+        pageCount = (rowCount % pageSize != 0) ? (rowCount/pageSize + 1) : (rowCount/pageSize);
+        blockCount = (pageCount % blockSize != 0) ? (pageCount/blockSize + 1) : (pageCount/blockSize);
+        startRow = nowPage * pageSize;
+        endRow = (nowPage != (pageCount - 1)) ? (nowPage+1)*pageSize - 1 : rowCount - 1;
+        startPage = nowBlock * blockSize;
+        endPage = (nowBlock != (blockCount - 1))? (nowBlock+1)*blockSize - 1 : pageCount - 1;
+        prevBlock = startPage - blockSize;
+        nextBlock = startPage + blockSize;
+        existPrev = nowBlock != 0;
+        existNext = nowBlock != (blockCount-1);
+    }
 }

@@ -29,24 +29,25 @@ public class FloatingController {
         if(searchWord.equals("null")){
             pager.setSearchWord("");
         }else{
-            pxy.print("검색어가 "+searchWord);
             pager.setSearchWord(searchWord);
         }
-        pxy.print("넘어온 페이지번호: "+pageNumber);
-        pager.setPageNow(pxy.integer(pageNumber));
+        pager.setNowPage(pxy.integer(pageNumber));
         pager.setBlockSize(5);
         pager.setPageSize(20);
         pager.paging();
-        IFunction<Pager, List<FloatingDTO>> f = p ->  floatingMapper.selectFloatings(p);
+        Function<Pager, List<FloatingDTO>> f = p ->  floatingMapper.selectFloatings(p);
         List<FloatingDTO> list = f.apply(pager);
+        for(FloatingDTO m : list){
+
+        }
         box.clear();
         box.put("pager", pager);
         box.put("list", list);
         return box.get();
     }
 
-        @GetMapping("/{searchWord}")
-        public FloatingDTO detail(@PathVariable("searchWord") String searchWord){
-        return floatingMapper.selectFloating(searchWord);
+        @GetMapping("/{seq}")
+        public FloatingDTO detail(@PathVariable("seq") String seq){
+        return floatingMapper.selectFloating(seq);
     }
 }

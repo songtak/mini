@@ -1,39 +1,29 @@
 <template>
 <div class="back">
-<div id="header" >
-            <router-link to="/"><img
-               id="mainimg"
-               src="https://i.pinimg.com/originals/7f/22/96/7f22963d97da87d2714d3029c79a0341.gif"
-               title="mainimg"
-            /></router-link>
-</div>
-
-<div id="topnav">
-  <router-link to="/join"><span id="join">SIGN UP</span></router-link>
-</div>
 
         <div class="container">
             <label style="font-size:23px; color:#ffffff">ID</label>
-            <input type="id"  @keyup.enter="moveToPasswd"  v-model="id" placeholder="ENTER ID" required>
+            <input type="id"  @keyup.enter="id"  v-model="id" placeholder="ENTER ID" required>
 
             <label style="font-size:23px; color:#ffffff">PASSWORD</label>
-            <input  type="password" @keyup.enter="login"   v-model="passwd" placeholder="ENTER PASSWORD" id="passwd" required>
+            <input  type="password" @keyup.enter="password"   v-model="password" placeholder="ENTER PASSWORD" required>
 
            <label style="font-size:23px; color:#ffffff">NAME</label>
-            <input type="name"  @keyup.enter="moveToPasswd"  v-model="name" placeholder="ENTER NAME" required>
-
-           <label style="font-size:23px; color:#ffffff">PHONENUMBER</label>
-            <input  type="phonenumber"  @keyup.enter="moveToPasswd"  v-model="phoneNumber" placeholder="ENTER PHONENUMBER" required>
-
-           <label style="font-size:23px; color:#ffffff;">SEX</label>
-            <td></td>
-           <label style="font-size:18px; color:#ffffff">FEMALE</label>
-           <input type="checkbox" style="margin:0px 18px 0px 0px" name="female">
-           <label style="font-size:18px; color:#ffffff; margin:0px 4px 0px 0px">MALE</label>
-           <input type="checkbox" name="male">
+            <input type="name"  @keyup.enter="name"  v-model="name" placeholder="ENTER NAME" required>
 
 
-            <button @click="login" style="font-size:27px; margin:40px 0px 0px 0px" type="submit">SIGN UP</button>
+            <label style="font-size:23px; color:#ffffff">PHONENUMBER</label>
+            <input  type="phonenumber"  @keyup.enter="phonenumber"  v-model="phoneNumber" placeholder="ENTER PHONENUMBER" required>
+
+            <label style="font-size:23px; color:#ffffff">BIRTH</label>
+            <input  type="birth" @keyup.enter="birth"   v-model="birth" placeholder="ENTER BIRTH" required>
+
+
+            <label style="font-size:23px; color:#ffffff;">SEX</label>
+            <input  type="sex" @keyup.enter="sex"   v-model="sex" placeholder="ENTER SEX" required>
+
+
+            <button @click="join" style="font-size:27px; margin:40px 0px 0px 0px" type="submit">SIGN UP</button>
 
         </div>
         <div class="container" style="background-color:black" >
@@ -45,9 +35,26 @@
 
 <script>
     export default {
-        methods: {
+        data(){
+        return{
+            id: '',
+            password: '',
+            name: '',
+            phoneNumber: '',
+            birth: '',
+            sex: ''
         }
-};
+        },
+        methods: {
+            join() {
+                this.$store.dispatch('sign/join',
+                    {id:this.id, password:this.password, name:this.name,
+                    phoneNumber:this.phoneNumber, birth:this.birth,
+                    sex:this.sex})
+            }
+
+        }
+}
 
 </script>
 <style scoped>
@@ -61,18 +68,11 @@ body {
     height: 1500px;
     background-color: black;}
 
- #header {
-  padding: 20px;
-  text-align: left;
-  background: black;
-}
 
-#mainimg{
-   height: 100px;
-  }
    form {border: 3px solid #f1f1f1;}
     input[type=id], input[type=password],
-    input[type=name], input[type=phonenumber] {
+    input[type=name], input[type=phonenumber],
+    input[type=birth], input[type=sex]{
         width: 100%;
         padding: 12px 20px;
         margin: 0px 0px 19px 0px;
@@ -82,12 +82,7 @@ body {
     }
 
 
-    #topnav {
-      font-size: 44px;
-      color: black;
-      overflow: hidden;
-      background-color: #00ff00;
-    }
+
 
     #topnav span {
       display: block;
@@ -96,6 +91,10 @@ body {
       padding: 14px 16px;
     }
 
+    input{
+        font-size:19px;
+        color:#ffffff;
+    }
 
 
     button {

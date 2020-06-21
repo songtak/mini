@@ -1,25 +1,15 @@
 <template>
 <div id="back">
-<div id="header" >
-            <router-link to="/"><img
-               id="mainimg"
-               src="https://i.pinimg.com/originals/7f/22/96/7f22963d97da87d2714d3029c79a0341.gif"
-               title="mainimg"
-            /></router-link>
-</div>
 
         <div class="container">
-            <label >ID</label>
-            <input type="text"  @keyup.enter="moveToPasswd"  v-model="userid" placeholder="Enter Username" required>
+            <label style="font-size:23px; color:#ffffff">ID</label>
+            <input style="font-size:18px; color:#ffffff" type="text"  @keyup.enter="id"  v-model="id" placeholder="Enter Username" required>
 
-            <label>PASSWORD</label>
-            <input type="password" @keyup.enter="login"   v-model="passwd" placeholder="Enter Password" id="passwd" required>
+            <label style="font-size:23px; color:#ffffff">PASSWORD</label>
+            <input style="font-size:18px; color:#ffffff" type="text" @keyup.enter="password"   v-model="password" placeholder="Enter Password" required>
 
             <button @click="login"  type="submit">Login</button>
 
-        </div>
-        <div class="container" style="background-color:black" >
-            <button type="button" class="cancelbtn">Cancel</button>
         </div>
 
 </div>
@@ -27,13 +17,24 @@
 
 <script>
     export default {
+        name: "login",
+        data(){
+            return{
+                id:'',
+                password:''
+            }
+        },
         methods: {
+            login(){
+                if(this.id!=''&&this.password!=''){
+                    this.$store.dispatch('sign/login',{id:this.id, password:this.password})
+                }else alert('아이디 및 비밀번호를 입력해주세요.')
+            }
         }
-};
+}
 
 </script>
 <style scoped>
-  box-sizing: border-box;
 
 body {
   font-family: Arial;
@@ -43,15 +44,6 @@ body {
  #back{
     background-color: black;}
 
- #header {
-  padding: 20px;
-  text-align: left;
-  background: black;
-}
-
-#mainimg{
-   height: 100px;
-  }
    form {border: 3px solid #f1f1f1;}
     input[type=text], input[type=password] {
         width: 100%;

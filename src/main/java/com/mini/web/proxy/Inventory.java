@@ -9,8 +9,7 @@ import java.util.function.Function;
 @Component @Lazy
 public class Inventory<T> {
     private ArrayList<T> inventory;
-    // add, get(i), get(list), clear, size, newInventory
-    public Inventory(){inventory = new ArrayList<>();}
+    Inventory(){inventory = new ArrayList<>();}
     public void add (T t){inventory.add(t);}
     public ArrayList<T> get(){return inventory;}
     public T get(int i){

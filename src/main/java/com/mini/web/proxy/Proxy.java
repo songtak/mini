@@ -3,10 +3,7 @@ package com.mini.web.proxy;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.function.BiPredicate;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 @Component("pxy") @Lazy
 public class Proxy {
@@ -18,8 +15,5 @@ public class Proxy {
         Function<String, Integer> f = Integer::parseInt;
         return f.apply(s);
     }
-    public void print(String t){
-        Consumer<String> c = System.out::print;
-        c.accept(t);
-    }
+
 }

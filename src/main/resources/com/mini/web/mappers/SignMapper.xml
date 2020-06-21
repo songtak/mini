@@ -1,0 +1,67 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mini.web.mappers.SignMapper">
+
+    <insert id="insertSign"
+            parameterType="com.mini.web.sign.SignDTO">
+        insert
+        into sign(id, password, name, phone_number, sign_date, sex, birth)
+        value (#{id},#{password},#{name},#{phoneNumber},#{signDate},#{sex},#{birth})
+    </insert>
+
+    <update id="updateSign"
+            parameterType="com.mini.web.sign.SignDTO">
+    </update>
+
+    <select id="selectSign"
+            parameterType="int"
+            resultType="com.mini.web.sign.SignDTO">
+        select seq, id, password, name, phone_number, sign_date, sex, birth
+        from sign
+        where seq=#{value}
+    </select>
+
+    <select id="selectSigns"
+            parameterType="com.mini.web.proxy.Pager"
+            resultType="com.mini.web.sign.SignDTO">
+        select seq, id, password, name, phone_number, sign_date, sex, birth
+        from sign
+    </select>
+
+    <select id="searchSigns"
+            parameterType="com.mini.web.proxy.Pager"
+            resultType="com.mini.web.sign.SignDTO">
+        select seq, id, password, name, phone_number, sign_date, sex, birth
+        from sign
+        where name like '%${searchWord}%'
+        or phone_number like'%${searchWord}%'
+        or sign_date like '%${searchWord}%'
+        or sex like '%${searchWord}%'
+        or birth like '%${searchWord}%'
+        limit #{rowStart}, #{pageSize}
+    </select>
+
+
+
+    <select id="loginSign"
+            parameterType="com.mini.web.sign.SignDTO"
+            resultType="int">
+        select count(*)
+        from sign
+        where id like #{id}
+        and password like #{password}
+    </select>
+
+
+    <delete id="deleteSign"
+            parameterType="int">
+    </delete>
+
+
+    <select id="count"
+            resultType="int">
+        select count(*)
+        from sign
+    </select>
+</mapper>

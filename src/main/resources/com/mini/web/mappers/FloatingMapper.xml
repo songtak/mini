@@ -40,7 +40,7 @@
             OR required  like '%${searchWord}%'
             OR provider  like '%${searchWord}%')
         </if>
-        limit #{rowStart},  #{pageSize}
+        limit #{startRow},  #{pageSize}
 
     </select>
 
@@ -51,7 +51,7 @@
                 start_point startPoint, start_new_adress startNewAdress, start_old_adress startOldAdress,
                 end_point endPoint, end_new_adress endNewAdress, end_old_adress endOldAdress,
                 course, management_number managementNumber, management,
-                km, required, update_date updateDate, provider
+                km, required, update_date updateDate, provider, lati, longi
       from floating
       where floating_seq = #{value}
 
